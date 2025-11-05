@@ -35,12 +35,15 @@ class SuperTuxDataset(Dataset):
         if transform_pipeline == "default":
             xform = transforms.ToTensor()
         elif transform_pipeline == "aug":
-            # construct your custom augmentation
+            # took gemini help for understanding logic
+            # Data augmentation for training
+            # Adding random horizontal flips and some color jitter to help the model generalize
             xform = transforms.Compose(
                 [
-                    # TODO: fix
-                    # transforms.ColorJitter(0.9, 0.9, 0.9, 0.1),
-                    transforms.RandomHorizontalFlip(),
+                     # transforms.ColorJitter(0.9, 0.9, 0.9, 0.1),
+                    #transforms.RandomHorizontalFlip(),
+                    transforms.RandomHorizontalFlip(p=0.5),  # Randomly flip images horizontally
+                    transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2, hue=0.1),  # Slight color variations
                     transforms.ToTensor(),
                 ]
             )
